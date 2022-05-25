@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ApiController\Blog;
+namespace App\Http\Controllers\APIController\Blog;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
@@ -109,8 +109,6 @@ class CommentController extends Controller
             ->firstOrFail();
 
         $comment->delete();
-
-        //Comment::destroy($commentId);
 
         return response(null,Response::HTTP_NO_CONTENT);
     }
