@@ -1,6 +1,6 @@
 <!doctype html>
 
-
+@php /** @var  \App\Models\Comment $comments */  @endphp
 @extends('layouts.app')
 
 <html lang="{{ app()->getLocale() }}">
@@ -26,7 +26,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-                    <a class="btn btn-primary" href="{{ route('api.blog.posts.index') }}"><h2>Главная</h2></a>
+                    <a class="btn btn-primary" href="{{ route('api.blog.posts.index') }}"><h2>Main</h2></a>
                 </nav>
             </div>
         </div>
@@ -38,36 +38,34 @@
                     <div class="card-body">
                         <div class="tab-content">
                             <div class="tab-pane active" id="maindata" role="tabpanel">
-                               <form method="GET" action="{{-- route('api.blog.comments.create') --}}">
+                                <form method="GET" action="route('api.blog.comments.create')">
 
                                     @csrf
 
-                                     <input name="post_id"
-                                            type="hidden"
-                                            value="{{ $post_id }}"
-                                            class="form-control">
-                                     <input name="parent_id"
-                                            type="hidden"
-                                            value="{{ $parent_id = NULL }}"
-                                            class="form-control">
+                                    <input name="post_id"
+                                           type="hidden"
+                                           value="{{ $post_id }}"
+                                           class="form-control">
+                                    <input name="parent_id"
+                                           type="hidden"
+                                           value="{{ $parent_id = null }}"
+                                           class="form-control">
                                     <div class="row justify-content-center">
                                         <div class="col-md-12">
                                             <div class="card-body">
-                                                <button type="submit" class="btn btn-primary">Новый комментарий</button>
+                                                <button type="submit" class="btn btn-primary">New comment</button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
 
-
-                                @php /** @var  \App\Models\Comment $comments */  @endphp
                                 <posts>
                                     <div id="comments">
                                         <ol>
                                             @if(isset($comments))
-                                                    @include('blog.comments.comment', ['$comments' => $comments])
+                                                @include('blog.comments.comment', ['$comments' => $comments])
                                             @else
-                                                <p>Здесь пока ничего нет.</p>
+                                                <p>Empty</p>
                                             @endif
 
                                             @csrf

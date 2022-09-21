@@ -30,16 +30,6 @@
                                                     ID: {{$comment->id}} </a></p>
                                             <span class="border border-2"> {{ $comment->content }} </span>
                                             <p> Parent_id:{{$comment->parent_id}}</p>
-
-
-                                            {{--    @foreach($item->children as $val)
-                                                    <div class="comment-body">
-                                                        {{ is_object($item->created_at) ? $item->created_at->format('d.m.Y в H:i') : ''}}
-                                                        <p>ID: {{$val->id}}</p>
-                                                        <span class="border border-2"> {{ $val->content }} </span>
-                                                        <p> Parent_id:{{$val->parent_id}}</p>
-                                                    </div>
-                                                @endforeach  --}}
                                         </div>
 
 
