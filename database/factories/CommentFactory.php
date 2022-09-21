@@ -17,18 +17,16 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
-        $txt = $this->faker->sentence(rand(1, 15),true);
+        $txt = $this->faker->sentence(rand(1, 15), true);
         $createdAt = $this->faker->dateTimeBetween('-3 month', '-2 days');
-
         $data = [
             'post_id' => 1,
             'parent_id' => rand(0, 10),
             'content' => $txt,
             'is_Published' => 1,
-            'published_at' =>  $this->faker->dateTimeBetween('-2 month', '-1 days'),
+            'published_at' => $this->faker->dateTimeBetween('-2 month', '-1 days'),
             'created_at' => $createdAt,
             'updated_at' => $createdAt,
-
         ];
 
         return $data;

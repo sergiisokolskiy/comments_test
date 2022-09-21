@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Comment extends Model
 {
     use HasFactory;
-  //  use SoftDeletes;
 
     protected $with = [
         'children',
@@ -25,7 +24,7 @@ class Comment extends Model
 
     public function children(): HasMany
     {
-        return $this->hasMany(Comment::class,'parent_id');
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 
     public function parent(): BelongsTo
