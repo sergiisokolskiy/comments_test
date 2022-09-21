@@ -25,8 +25,8 @@ class CommentRequest extends FormRequest
     {
         return [
             'content' => 'required|string|max:10000|min:3',
-            'parent_id' => 'integer|int',
-            'post_id' => 'integer|int',
+            'parent_id' => 'integer|int|min:1',
+            'post_id' => 'integer|int|min:1',
         ];
     }
 
@@ -39,7 +39,7 @@ class CommentRequest extends FormRequest
     public function messages()
     {
         return [
-            'content.min' => 'Минимальная длина статьи [:min] символов',
+            'content.min' => 'Min length [:min] of characters in the article',
             'parent_id' => 'Parent id must be integer',
             'post_id' => 'Post id must be integer',
         ];
