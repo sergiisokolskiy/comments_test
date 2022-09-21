@@ -16,8 +16,8 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( $postId ) {
-
+    public function index($postId)
+    {
         $comments = Comment::query()
             ->where('post_id', $postId)
             ->where('parent_id', 0)
@@ -25,9 +25,6 @@ class CommentController extends Controller
             ->get();
 
         return CommentResource::collection($comments);
-
-
-
     }
 
     /**
@@ -39,17 +36,13 @@ class CommentController extends Controller
     public function store(CommentRequest $request)
     {
         $data = $request->validated();
-
         $comment = Comment::create($data);
-
 
         return response([
 
-            'data' => new CommentResource($comment)
+            'data' => new CommentResource($comment),
 
-        ],Response::HTTP_CREATED);
-
-
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -60,14 +53,12 @@ class CommentController extends Controller
      */
     public function show(int $postId, int $commentId)
     {
-
-       $comments = Comment::query() //->findOrFail($commentId);
-           ->where('post_id', $postId)
-           ->where('id', $commentId)
-           ->firstOrFail();
+        $comments = Comment::query()
+            ->where('post_id', $postId)
+            ->where('id', $commentId)
+            ->firstOrFail();
 
         return new CommentResource($comments);
-
     }
 
     /**
@@ -79,7 +70,6 @@ class CommentController extends Controller
      */
     public function update(CommentRequest $request, int $postId, int $commentId)
     {
-
         $inputData = $request->validated();
 
         $comment = Comment::query()
@@ -88,7 +78,7 @@ class CommentController extends Controller
             ->firstOrFail();
 
 
-            $comment->update($inputData);
+        $comment->update($inputData);
 
 
         return response(['data' => new CommentResource($comment)], Response::HTTP_CREATED);
@@ -102,7 +92,6 @@ class CommentController extends Controller
      */
     public function destroy(int $postId, int $commentId)
     {
-
         $comment = Comment::query()
             ->where('post_id', $postId)
             ->where('id', $commentId)
@@ -110,6 +99,6 @@ class CommentController extends Controller
 
         $comment->delete();
 
-        return response(null,Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
