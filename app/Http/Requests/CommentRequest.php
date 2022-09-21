@@ -39,7 +39,7 @@ class CommentRequest extends FormRequest
     public function messages()
     {
         return [
-            'content.min' => 'Min length [:min] of characters in the article',
+            'content.min' => 'Min length  of characters [:min] in the article',
             'parent_id' => 'Parent id must be integer',
             'post_id' => 'Post id must be integer',
         ];
