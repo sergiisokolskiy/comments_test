@@ -6,17 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Http\Request;
+
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($postId)
+
+    public function index(int $postId): AnonymousResourceCollection
     {
         $comments = Comment::query()
             ->where('post_id', $postId)
@@ -27,13 +26,7 @@ class CommentController extends Controller
         return CommentResource::collection($comments);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CommentRequest $request)
+    public function store(CommentRequest $request): \Illuminate\Http\Response|Application|ResponseFactory
     {
         $data = $request->validated();
         $comment = Comment::create($data);
@@ -45,13 +38,7 @@ class CommentController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(int $postId, int $commentId)
+    public function show(int $postId, int $commentId): CommentResource
     {
         $comments = Comment::query()
             ->where('post_id', $postId)
@@ -61,14 +48,7 @@ class CommentController extends Controller
         return new CommentResource($comments);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(CommentRequest $request, int $postId, int $commentId)
+    public function update(CommentRequest $request, int $postId, int $commentId): \Illuminate\Http\Response|Application|ResponseFactory
     {
         $inputData = $request->validated();
 
@@ -84,13 +64,7 @@ class CommentController extends Controller
         return response(['data' => new CommentResource($comment)], Response::HTTP_CREATED);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(int $postId, int $commentId)
+    public function destroy(int $postId, int $commentId): \Illuminate\Http\Response|Application|ResponseFactory
     {
         $comment = Comment::query()
             ->where('post_id', $postId)
