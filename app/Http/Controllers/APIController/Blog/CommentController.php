@@ -15,15 +15,21 @@ use Symfony\Component\HttpFoundation\Response;
 class CommentController extends Controller
 {
 
-    public function index(int $postId): AnonymousResourceCollection
+    public function index(int $postId): AnonymousResourceCollection| \Illuminate\Http\JsonResponse
     {
+
         $comments = Comment::query()
             ->where('post_id', $postId)
             ->where('parent_id', 0)
             ->with('children')
             ->get();
 
-        return CommentResource::collection($comments);
+        if (Comment::where('post_id', $postId)->exists()) {
+            return CommentResource::collection($comments);
+        } else {
+            return response()->json(['message' => 'Not Found!'], 404);
+        }
+
     }
 
     public function store(CommentRequest $request): \Illuminate\Http\Response|Application|ResponseFactory
@@ -40,12 +46,12 @@ class CommentController extends Controller
 
     public function show(int $postId, int $commentId): CommentResource
     {
-        $comments = Comment::query()
+        $comment = Comment::query()
             ->where('post_id', $postId)
             ->where('id', $commentId)
             ->firstOrFail();
 
-        return new CommentResource($comments);
+        return new CommentResource($comment);
     }
 
     public function update(CommentRequest $request, int $postId, int $commentId): \Illuminate\Http\Response|Application|ResponseFactory
