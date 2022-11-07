@@ -28,7 +28,6 @@ class CommentController extends Controller
         } else {
             return CommentResource::collection($comments);
         }
-
     }
 
     public function store(CommentRequest $request): \Illuminate\Http\Response|Application|ResponseFactory
@@ -53,8 +52,11 @@ class CommentController extends Controller
         return new CommentResource($comment);
     }
 
-    public function update(CommentRequest $request, int $postId, int $commentId): \Illuminate\Http\Response|Application|ResponseFactory
-    {
+    public function update(
+        CommentRequest $request,
+        int $postId,
+        int $commentId
+    ): \Illuminate\Http\Response|Application|ResponseFactory {
         $inputData = $request->validated();
 
         $comment = Comment::query()
