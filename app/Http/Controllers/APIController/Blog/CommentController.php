@@ -15,19 +15,18 @@ use Symfony\Component\HttpFoundation\Response;
 class CommentController extends Controller
 {
 
-    public function index(int $postId): AnonymousResourceCollection| \Illuminate\Http\JsonResponse
+    public function index(int $postId): AnonymousResourceCollection|\Illuminate\Http\Response
     {
-
         $comments = Comment::query()
             ->where('post_id', $postId)
             ->where('parent_id', 0)
             ->with('children')
             ->get();
 
-        if (Comment::where('post_id', $postId)->exists()) {
-            return CommentResource::collection($comments);
+        if (empty(collect($comments)->all())) {
+            return response(null, Response::HTTP_NOT_FOUND);
         } else {
-            return response()->json(['message' => 'Not Found!'], 404);
+            return CommentResource::collection($comments);
         }
 
     }
